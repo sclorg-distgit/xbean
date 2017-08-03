@@ -1,0 +1,62 @@
+From 9e1bb9bfee86490163fb1e226556620aa8cdf7bc Mon Sep 17 00:00:00 2001
+From: Mikolaj Izdebski <mizdebsk@redhat.com>
+Date: Fri, 21 Nov 2014 10:05:05 +0100
+Subject: [PATCH 2/3] Port to Eclipse Luna OSGi
+
+---
+ xbean-bundleutils/pom.xml                                      |  8 +-------
+ .../apache/xbean/osgi/bundle/util/DelegatingBundleContext.java | 10 ++++++++++
+ 2 files changed, 11 insertions(+), 7 deletions(-)
+
+diff --git a/xbean-bundleutils/pom.xml b/xbean-bundleutils/pom.xml
+index 72f4865..2b3459d 100644
+--- a/xbean-bundleutils/pom.xml
++++ b/xbean-bundleutils/pom.xml
+@@ -35,15 +35,9 @@
+             <artifactId>slf4j-api</artifactId>
+         </dependency>
+         <dependency>
+-            <groupId>org.osgi</groupId>
+-            <artifactId>org.osgi.core</artifactId>
+-            <version>4.3.1</version>
+-            <scope>provided</scope>
+-        </dependency>
+-        <dependency>
+             <groupId>org.eclipse</groupId>
+             <artifactId>osgi</artifactId>
+-            <version>3.6.0.v20100517</version>
++            <version>3.10.0-v20140606-1445</version>
+             <scope>provided</scope>
+         </dependency>
+     </dependencies>
+diff --git a/xbean-bundleutils/src/main/java/org/apache/xbean/osgi/bundle/util/DelegatingBundleContext.java b/xbean-bundleutils/src/main/java/org/apache/xbean/osgi/bundle/util/DelegatingBundleContext.java
+index 58a392b..cc8d081 100644
+--- a/xbean-bundleutils/src/main/java/org/apache/xbean/osgi/bundle/util/DelegatingBundleContext.java
++++ b/xbean-bundleutils/src/main/java/org/apache/xbean/osgi/bundle/util/DelegatingBundleContext.java
+@@ -31,7 +31,9 @@ import org.osgi.framework.BundleListener;
+ import org.osgi.framework.Filter;
+ import org.osgi.framework.FrameworkListener;
+ import org.osgi.framework.InvalidSyntaxException;
++import org.osgi.framework.ServiceFactory;
+ import org.osgi.framework.ServiceListener;
++import org.osgi.framework.ServiceObjects;
+ import org.osgi.framework.ServiceReference;
+ import org.osgi.framework.ServiceRegistration;
+ 
+@@ -153,5 +155,13 @@ public class DelegatingBundleContext implements BundleContext {
+     public Bundle getBundle(String location) {
+         return bundleContext.getBundle(location);
+     }
++
++    public <S> ServiceObjects<S> getServiceObjects(ServiceReference<S> reference) {
++        return bundleContext.getServiceObjects(reference);
++    }
++
++    public <S> ServiceRegistration<S> registerService(Class<S> clazz, ServiceFactory<S> factory, Dictionary<String, ?> properties) {
++        return bundleContext.registerService(clazz, factory, properties);
++    }
+     
+ }
+-- 
+2.9.3
+
