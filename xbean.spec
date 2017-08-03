@@ -9,7 +9,7 @@
 
 Name:           %{?scl_prefix}xbean
 Version:        4.5
-Release:        7.1%{?dist}
+Release:        7.2%{?dist}
 Summary:        Java plugin based web server
 License:        ASL 2.0
 URL:            http://geronimo.apache.org/xbean/
@@ -192,6 +192,9 @@ sed -i "s|</Private-Package>|</Private-Package-->|" xbean-blueprint/pom.xml
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Jun 22 2017 Michael Simacek <msimacek@redhat.com> - 4.5-7.2
+- Mass rebuild 2017-06-22
+
 * Wed Jun 21 2017 Java Maintainers <java-maint@redhat.com> - 4.5-7.1
 - Automated package import and SCL-ization
 
